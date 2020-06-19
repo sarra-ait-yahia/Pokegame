@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Capture pokémon{% endblock %}
+
+{% block body %}
+    <div class="centre">
+    <h1>Capturez un nouveau pokémon!</h1>
+
+    {{ include('chasse/_form.html.twig') }}
+        <br>
+        {% if message is defined %}
+            <p class="alert">{{ message }}</p> <br>
+        {% endif %}
+
+    <a href="{{ path('chasse_index') }}">L'historique de vos captures</a>  &nbsp &nbsp &nbsp  &nbsp
+    <a href="{{ path('home') }}">Retour à la page d'accueil</a>&nbsp &nbsp &nbsp  &nbsp<a href="/logout" > Se déconnecter </a>
+    </div>
+{% endblock %}

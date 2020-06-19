@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon{% endblock %}
+
+{% block body %}
+    <div class="centre">
+    <h1> La fiche du pokémon:</h1>
+
+    <table class="tablePokemon">
+        <tbody>
+            <tr>
+                <th>Nom de l'espèce: </th>
+                <td>{{ pokemon.typePokemon.nom }}</td>
+            </tr>
+            <tr>
+                <th>Son surnom:</th>
+                <td>{{ pokemon.surnom }}</td>
+            </tr>
+            <tr>
+                <th>Son genre:</th>
+                <td>{{ pokemon.sexe =='Ma'? 'Masculin' :'Féminin'}}</td>
+            </tr>
+            <tr>
+                <th>L'expérience: </th>
+                <td>{{ pokemon.xp }}</td>
+            </tr>
+            <tr>
+                <th>Niveau: </th>
+                <td>{{ pokemon.niveau }}</td>
+            </tr>
+            <tr>
+                <th>Est il un pokémon d'évolution: </th>
+                <td>{{ pokemon.typePokemon.evolution? 'Oui': 'Non'}}</td>
+            </tr>
+            <tr>
+                <th>Est il un starter: </th>
+                <td>{{ pokemon.typePokemon.starter? 'Oui': 'Non' }} </td>
+            </tr>
+            <tr>
+                <th>Ce pokémon est de type: </th>
+                <td>{{ pokemon.typePokemon.type1.libelle }} <br> {{ pokemon.typePokemon.type2? pokemon.typePokemon.type2.libelle:''}} </td>
+            </tr>
+            <tr>
+                <th>Le type de courbe qui détermine son niveau: </th>
+                {% if pokemon.typePokemon.typeCourbeNiveau=="M" %}
+                    <td>Moyenne</td>
+                {% elseif pokemon.typePokemon.typeCourbeNiveau=="L" %}
+                    <td>Lente</td>
+                {% elseif pokemon.typePokemon.typeCourbeNiveau=="R" %}
+                    <td>Rapide</td>
+                {% else  %}
+                    <td>Parabolique</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Est il à vendre ?</th>
+                <td>{{ pokemon.aVendre ? 'Oui' : 'Non' }}</td>
+            </tr>
+            {% if pokemon.aVendre ==true and miseEnVente is not defined %}
+            <tr>
+                <th>Prix: </th>
+                <td>{{ pokemon.prix }}</td>
+            </tr>
+            {% endif %}
+            {% if miseEnVente is defined and miseEnVente==true %}
+                <tr>
+                    <th>Prix: </th>
+                    <td>
+                    {{ include('pokemon/_formVente.html.twig') }}
+                    </td>
+                </tr>
+            {% endif %}
+            {% if pokemon.dateDernierEntrainement != null%}
+            <tr>
+                <th>Date du dernier entrainement: </th>
+                <td>{{  pokemon.dateDernierEntrainement|date('Y-m-d H:i:s')  }}</td>
+            </tr>
+            {% endif %}
+            {% if pokemon.dateDerniereChasse != null %}
+            <tr>
+                <th>Date de la dernière chasse: </th>
+                <td>{{ pokemon.dateDerniereChasse|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+        <br>
+
+        {% if message is defined  %}
+            <p class="alert">  {{ message }} </p>
+        {% endif %}
+        <br>
+    {% if pokemon.aVendre != true and miseEnVente is not defined %}
+        <a href="{{ path('pokemon_entrainer', {'id': pokemon.id}) }}"> Entrainer ce pokemon </a>&nbsp &nbsp &nbsp  &nbsp
+        <a href="{{ path('pokemon_avendre', {'id': pokemon.id}) }}"> Mettre en vente </a> &nbsp &nbsp &nbsp  &nbsp
+    {% endif %}
+   {% if miseEnVente is not defined %}
+    <a href="{{ path('pokemon_index') }}"> Retour à la liste des pokemons </a>&nbsp &nbsp &nbsp  &nbsp
+    {% else %}
+    <a href="{{ path('pokemon_show', {'id': pokemon.id}) }}"> Retour </a>&nbsp &nbsp &nbsp  &nbsp
+   {% endif %}
+    {% if pokemon.aVendre == true  and miseEnVente is not defined %}
+        <a href="{{ path('pokemon_recuperer', {'id': pokemon.id}) }}"> Retirer de la vente </a>&nbsp &nbsp &nbsp  &nbsp
+        <a href="{{ path('pokemon_avendre', {'id': pokemon.id}) }}"> Modifier le prix </a>&nbsp &nbsp &nbsp  &nbsp
+
+
+    {% endif %}
+       <a href="/logout" > Se déconnecter </a> <br> <br> <br> <br>
+
+    </div>
+{% endblock %}

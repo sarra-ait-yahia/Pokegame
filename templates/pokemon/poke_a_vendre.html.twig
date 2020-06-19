@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon en vente{% endblock %}
+
+{% block body %}
+    <div class="centre">
+    <h1>Pokemon en vente</h1>
+    <table class="tableVente">
+        <thead>
+        <tr>
+            <th>L'espèce du pokemon: </th>
+            <th>Surnom: </th>
+            <th>Son genre</th>
+            <th>Son expérience</th>
+            <th>Son niveau</th>
+            <th>Son prix: </th>
+            <th>Date du dernier entrainement</th>
+            <th>Date de la dernière chasse</th>
+            <th>Nom du vendeur</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pokemon in pokemon %}
+            {% if pokemon.aVendre == true %}
+                <tr>
+                    <td>{{ pokemon.typePokemon.nom }}</td>
+                    <td>{{ pokemon.surnom }}</td>
+                    <td>{{ pokemon.sexe =='Ma'? 'Masculin' :'Féminin'}}</td>
+                    <td>{{ pokemon.xp }}</td>
+                    <td>{{ pokemon.niveau }}</td>
+                     <td>{{ pokemon.prix }}</td>
+                    <td>{{ pokemon.dateDernierEntrainement ? pokemon.dateDernierEntrainement|date('Y-m-d H:i:s') : 'Ce pokémon n\'a pas encore été entrainé!' }}</td>
+                    <td>{{ pokemon.dateDerniereChasse ? pokemon.dateDerniereChasse|date('Y-m-d H:i:s') : 'Ce pokémon n\'est pas encore parti à la chasse!' }}</td>
+                    <td>{{ pokemon.dresseur.username}}</td>
+                    <td>
+                    {% if  pokemon.dresseur is same as(app.user) %}
+                        <a href="{{ path('pokemon_recuperer', {'id': pokemon.id}) }}"> Retirer de la vente </a>
+                    {% else %}
+                        <a href="{{ path('pokemon_acheter', {'id': pokemon.id}) }}">Acheter ce pokémon</a>
+                    {% endif %}
+                    </td>
+
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="10">Aucun pokémon n'est en vente!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table><br>
+        {% if PiecePasAssez is defined %}
+            <p class="alert"> {{ PiecePasAssez }}</p> <br>
+        {% endif %}
+    <a href="{{ path('home') }}">Retour à la page d'accueil</a>&nbsp &nbsp &nbsp  &nbsp<a href="/logout" > Se déconnecter </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chasse{% endblock %}
+
+{% block body %}
+    <div class="centre">
+    <h1>Votre nouvelle capture</h1>
+<h3> Félicitations , vous avez réussi à capturer un {{ pokemon.typePokemon.nom }}</h3>
+    {{ include('chasse/_formCapture.html.twig') }}
+       <a href="/logout" > Se déconnecter </a>
+    </div>
+{% endblock %}

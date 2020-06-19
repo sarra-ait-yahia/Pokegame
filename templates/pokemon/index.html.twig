@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon index{% endblock %}
+
+{% block body %}
+    <div class="centre">
+    <h1>La liste de mes pokémons:</h1>
+
+    <table class="tableTousPokemon">
+        <thead>
+            <tr>
+                <th>Numéro du pokémon </th>
+                <th>L'espèce du pokemon </th>
+                <th>Surnom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set i=0  %}
+        {% for poke in pokemon %}
+            {% if poke.dresseur.id  is same as(app.user.id ) %}
+            <tr>
+                {% set i=i+1  %}
+                <td> {{ i }}</td>
+                <td>{{ poke.typePokemon.nom }}</td>
+                <td>{{ poke.surnom }}</td>
+                <td>
+                    <a href="{{ path('pokemon_show', {'id': poke.id}) }}">Afficher sa fiche</a>
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="4">Vous n'avez aucun pokémon en votre possession</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> <br>
+    {% if app.user.pokemonOffert is null or app.user.pokemonOffert == false %}
+        <a href="{{ path('pokemon_new')}}" >
+            <p>Un pokemon vous a été offert , faites votre choix maintenant</p>
+        </a>
+    {% endif %}
+    <a href="{{ path('home') }}">Retour à la page d'accueil</a> &nbsp &nbsp &nbsp  &nbsp<a href="/logout" > Se déconnecter </a>
+    </div>
+{% endblock %}

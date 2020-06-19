@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Captures{% endblock %}
+
+{% block body %}
+    <div class="centre">
+    <h1>L'historique de vos captures</h1>
+
+    <table class="tableChasse">
+        <thead>
+            <tr>
+                <th>Numéro </th>
+                <th>Pokémon qui a fait la chasse</th>
+                <th>Pokémon chassé</th>
+                <th> la Date de la chasse </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set i=0  %}
+        {% for chasse in chasses %}
+            <tr>
+                {% set i=i+1  %}
+                <td> {{ i }}</td>
+                <td>{{ chasse.pokemon.typePokemon.nom}}</td>
+                <td>{{  chasse.pokemonChasse.typePokemon.nom}} </td>
+                <td>{{  chasse.dateChasse|date('Y-m-d H:i:s') }} </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Vous n'avez fait aucune capture!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="{{ path('chasse_new') }}">Partez à la chasse</a>&nbsp &nbsp &nbsp  &nbsp
+    <a href="{{ path('home') }}">Retour à la page d'accueil</a>&nbsp &nbsp &nbsp  &nbsp<a href="/logout" > Se déconnecter </a>
+    </div>
+{% endblock %}

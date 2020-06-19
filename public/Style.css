@@ -1,0 +1,56 @@
+Body{
+    font-family:Spinnaker;
+    font-size: 18px;
+    background-color:rgb(237,237,220);
+    position:center;
+    margin:0 auto;
+}
+h1{
+    font-size: 40px;
+    text-align:center;
+}
+a:link , a:hover, a:focus, a:visited
+{
+    text-decoration:none;
+    color:rgb(83,113,141);
+    font-weight:bold;
+    text-align:center;
+}
+button{
+    font-family:Spinnaker;
+    font-size: 20px;
+    font-weight:bold;
+    border-radius: 10px;
+    margin:10px;
+}
+input{
+    margin:10px;
+}
+.centre {
+     text-align:center;
+ }
+
+.alert{
+    color:red;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding:10px;
+}
+.tableUser{
+    margin-left:400px;
+}
+.tablePokemon{
+  margin-left:380px;
+}
+.tableTousPokemon{
+    margin-left:350px;
+}
+.tableVente{
+    margin:10px;
+}
+.tableChasse{
+    margin-left:300px;
+}
